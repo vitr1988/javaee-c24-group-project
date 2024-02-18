@@ -1,0 +1,49 @@
+server:
+  port : 8091
+spring:
+  config:
+    import: classpath:/config/database.yaml, classpath:/config/jwt.yaml
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    hikari:
+      leak-detection-threshold: 5000
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 50MB
+      max-file-size: 20MB
+storage:
+  music_files_path: "E:\\Projects\\Storage\\music_service_tms\\music\\"
+springdoc:
+  swagger-ui:
+    path: /docs.html
+  api-docs:
+    path: /api/docs.yaml
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: debug
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    hibernate:
+      SQL: debug
+    type:
+      descriptor:
+        sql:
+          BasicBinder: trace
+    root: debug

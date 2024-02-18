@@ -1,0 +1,3 @@
+jwt:
+  secret: '///////////password_secret_test\\\\\\\\\\\'
+  expiration: '10m'
