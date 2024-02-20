@@ -1,0 +1,55 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Dmitry Kripan" id="Create-table-albums">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="albums"/>
+            </not>
+        </preConditions>
+        <createTable tableName="albums">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="album_release" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="artist_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_album_artist" references="artists(id)"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Dmitry Kripan" id="Create-albums">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0"><![CDATA[
+                select count(*)
+                from albums
+                ]]>
+            </sqlCheck>
+            <sqlCheck expectedResult="1"><![CDATA[
+                select count(*)
+                from artists
+                where name = 'Queen'
+                ]]>
+            </sqlCheck>
+        </preConditions>
+
+        <insert tableName="albums">
+            <!-- Id is auto incremented -->
+            <column name="title" value="A Night at the Opera"/>
+            <column name="album_release" value="1975.11.21"/>
+            <column name="artist_id" valueComputed="(select id from artists where name = 'Queen')"/>
+            <column name="updated_at" value="now"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
