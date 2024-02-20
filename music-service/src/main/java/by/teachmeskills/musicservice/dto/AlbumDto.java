@@ -5,13 +5,10 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class TrackDto {
+public class AlbumDto {
     private Long id;
     private String title;
-    private LocalDateTime track_length;
-    private LocalDateTime created_at;
-    private String text;
+    private LocalDateTime album_release;
     private ArtistDto artistDto;
-    private AlbumDto albumDto;
     private LocalDateTime updatedAt;
 }

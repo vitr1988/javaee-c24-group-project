@@ -15,27 +15,19 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "tracks")
-public class Track {
+@Table(name = "albums")
+public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
 
-    private LocalDateTime track_length;
-
-    private LocalDateTime created_at;
-
-    private String text;
+    private LocalDateTime album_release;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id", nullable = false)
     private Artist artist;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "album_id", nullable = false)
-    private Album album;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
