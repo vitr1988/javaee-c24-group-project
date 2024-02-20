@@ -26,7 +26,7 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public TrackDto getTrackById(Long id) {
-        return trackMapper.toDTO(tracksRepository.findById(id).orElseThrow(() -> new NotFoundException("Artist with id {} not found.", id)));
+        return trackMapper.toDTO(tracksRepository.findById(id).orElseThrow(() -> new NotFoundException("Track with id {} not found.", id)));
     }
 
     @Override

@@ -32,6 +32,9 @@
             <column name="artist_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="fk_track_artist" references="artists(id)"/>
             </column>
+            <column name="album_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_track_album" references="albums(id)"/>
+            </column>
         </createTable>
     </changeSet>
 
@@ -48,6 +51,12 @@
                 where name = 'Queen'
                 ]]>
             </sqlCheck>
+            <sqlCheck expectedResult="1"><![CDATA[
+                select count(*)
+                from albums
+                where title = 'A Night at the Opera'
+                ]]>
+            </sqlCheck>
         </preConditions>
 
         <insert tableName="tracks">
@@ -58,6 +67,7 @@
             <column name="text" value="Is this the real life? Is this just fantasy? Caught in a landslide, no escape from reality"/>
             <column name="updated_at" value="now"/>
             <column name="artist_id" valueComputed="(select id from artists where name = 'Queen')"/>
+            <column name="album_id" valueComputed="(select id from albums where title = 'A Night at the Opera')"/>
         </insert>
     </changeSet>
 </databaseChangeLog>
