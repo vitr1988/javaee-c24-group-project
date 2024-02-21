@@ -28,16 +28,4 @@
         </createTable>
     </changeSet>
 
-    <!-- Создание foreign ключа playlists -> users -->
-    <changeSet author="Maxim Galitskiy" id="createForeignKeyPlaylistsUsers">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <foreignKeyConstraintExists foreignKeyTableName="playlists" foreignKeyName="fk_playlists_users_id"/>
-            </not>
-        </preConditions>
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="playlists"
-                                 constraintName="fk_playlists_users_id" deferrable="false" initiallyDeferred="false"
-                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
-                                 referencedTableName="users"/>
-    </changeSet>
 </databaseChangeLog>

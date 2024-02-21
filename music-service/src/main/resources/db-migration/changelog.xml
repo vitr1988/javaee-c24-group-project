@@ -5,17 +5,26 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <!-- Создание таблиц -->
-    <include file="create-tables/albums.xml" relativeToChangelogFile="true"/>
     <include file="create-tables/artists.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/albums.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/tracks.xml" relativeToChangelogFile="true"/>
     <include file="create-tables/genres.xml" relativeToChangelogFile="true"/>
     <include file="create-tables/genres_tracks.xml" relativeToChangelogFile="true"/>
-    <include file="create-tables/playlists.xml" relativeToChangelogFile="true"/>
-    <include file="create-tables/playlists_tracks.xml" relativeToChangelogFile="true"/>
     <include file="create-tables/roles.xml" relativeToChangelogFile="true"/>
     <include file="create-tables/statuses.xml" relativeToChangelogFile="true"/>
-    <include file="create-tables/track_file.xml" relativeToChangelogFile="true"/>
-    <include file="create-tables/tracks.xml" relativeToChangelogFile="true"/>
     <include file="create-tables/users.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/playlists.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/playlists_tracks.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/track_file.xml" relativeToChangelogFile="true"/>
+
+    <!-- Создание ключей -->
+    <include file="create-constraints/albums.xml" relativeToChangelogFile="true"/>
+    <include file="create-constraints/tracks.xml" relativeToChangelogFile="true"/>
+    <include file="create-constraints/genres_tracks.xml" relativeToChangelogFile="true"/>
+    <include file="create-constraints/users.xml" relativeToChangelogFile="true"/>
+    <include file="create-constraints/playlists.xml" relativeToChangelogFile="true"/>
+    <include file="create-constraints/playlists_tracks.xml" relativeToChangelogFile="true"/>
+    <include file="create-constraints/track_file.xml" relativeToChangelogFile="true"/>
 
     <!-- Тестовое наполнение таблиц -->
     <include file="test-fill-queries/artists-data.xml" relativeToChangelogFile="true"/>

@@ -33,17 +33,4 @@
         </createTable>
     </changeSet>
 
-    <!-- Создание foreign ключа track_file_tracks_id -> tracks -->
-    <changeSet author="Maxim Galitskiy" id="createForeignKeyTrackFileTracks">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <foreignKeyConstraintExists foreignKeyTableName="track_file" foreignKeyName="fk_track_file_tracks_id"/>
-            </not>
-        </preConditions>
-        <addForeignKeyConstraint baseColumnNames="track_id" baseTableName="track_file"
-                                 constraintName="fk_track_file_tracks_id" deferrable="false" initiallyDeferred="false"
-                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
-                                 referencedTableName="tracks" />
-    </changeSet>
-
 </databaseChangeLog>

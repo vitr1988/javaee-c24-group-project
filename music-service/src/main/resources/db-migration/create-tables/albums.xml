@@ -11,7 +11,7 @@
             </not>
         </preConditions>
         <createTable tableName="albums">
-            <column autoIncrement="true" name="id" startWith="2" type="BIGINT">
+            <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="albums_pkey"/>
             </column>
             <column name="title" type="VARCHAR(255)">
@@ -25,19 +25,6 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-    </changeSet>
-
-
-    <changeSet author="Maxim Galitskiy" id="createForeignKeyAlbumsArtists">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <foreignKeyConstraintExists foreignKeyTableName="albums" foreignKeyName="fk_albums_artists_id"/>
-            </not>
-        </preConditions>
-        <addForeignKeyConstraint baseColumnNames="artist_id" baseTableName="albums"
-                                 constraintName="fk_albums_artists_id" deferrable="false" initiallyDeferred="false"
-                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
-                                 referencedTableName="artists"/>
     </changeSet>
 
 </databaseChangeLog>

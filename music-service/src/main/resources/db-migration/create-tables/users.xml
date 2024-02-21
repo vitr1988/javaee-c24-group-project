@@ -36,37 +36,4 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Maxim Galitskiy" id="createUniqueConstraintUsersLogin">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <indexExists tableName="users" indexName="users_login_key"/>
-            </not>
-        </preConditions>
-        <addUniqueConstraint columnNames="login" constraintName="users_login_key" tableName="users"/>
-    </changeSet>
-
-    <changeSet author="Maxim Galitskiy" id="createForeignKeyUsersRoles">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <foreignKeyConstraintExists foreignKeyTableName="users" foreignKeyName="fk_users_roles_id"/>
-            </not>
-        </preConditions>
-        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="users" constraintName="fk_users_roles_id"
-                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="role_id" referencedTableName="roles"/>
-    </changeSet>
-
-
-    <changeSet author="Maxim Galitskiy" id="createForeignKeyUsersStatuses">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <foreignKeyConstraintExists foreignKeyTableName="users" foreignKeyName="fk_users_statuses_id"/>
-            </not>
-        </preConditions>
-        <addForeignKeyConstraint baseColumnNames="status_id" baseTableName="users" constraintName="fk_users_statuses_id"
-                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="id" referencedTableName="statuses"/>
-    </changeSet>
-
-
 </databaseChangeLog>

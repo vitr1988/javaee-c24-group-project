@@ -30,15 +30,4 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Maxim Galitskiy" id="createForeignKeyTracksAlbums">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <foreignKeyConstraintExists foreignKeyTableName="tracks" foreignKeyName="fk_tracks_albums_id"/>
-            </not>
-        </preConditions>
-        <addForeignKeyConstraint baseColumnNames="album_id" baseTableName="tracks" constraintName="fk_tracks_albums_id"
-                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="id" referencedTableName="albums"/>
-    </changeSet>
-
 </databaseChangeLog>
