@@ -2,18 +2,24 @@ package by.teachmeskills.musicservice.mapper;
 
 import by.teachmeskills.musicservice.dto.AlbumDto;
 import by.teachmeskills.musicservice.entity.Album;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {TrackMapper.class})
 public interface AlbumMapper {
-    @Mapping(source = "artist", target = "artistDto")
-    AlbumDto toDTO(Album model);
+    Album toEntity(AlbumDto albumDto);
 
-    @Mapping(source = "artistDto.id", target = "artist.id")
-    Album toModel(AlbumDto dto);
+    @AfterMapping
+    default void linkTracks(@MappingTarget Album album) {
+        album.getTracks().forEach(track -> track.setAlbum(album));
+    }
 
-    void updateAlbumFromDto(AlbumDto dto, @MappingTarget Album model);
+    AlbumDto toDto(Album album);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Album partialUpdate(AlbumDto albumDto, @MappingTarget Album album);
 }

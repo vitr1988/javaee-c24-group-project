@@ -1,20 +1,19 @@
 package by.teachmeskills.musicservice.mapper;
 
-import by.teachmeskills.musicservice.dto.TrackDto;
-import by.teachmeskills.musicservice.entity.Track;
+import by.teachmeskills.musicservice.dto.GenreDto;
+import by.teachmeskills.musicservice.entity.Genre;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface TrackMapper {
-    Track toEntity(TrackDto trackDto);
-    @Mapping(target = "album", ignore = true)
-    TrackDto toDto(Track track);
+public interface GenreMapper {
+    Genre toEntity(GenreDto genreDto);
+
+    GenreDto toDto(Genre genre);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Track partialUpdate(TrackDto trackDto, @MappingTarget Track track);
+    Genre partialUpdate(GenreDto genreDto, @MappingTarget Genre genre);
 }
