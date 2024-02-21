@@ -1,0 +1,20 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- Создание foreign ключа albums -> artists -->
+    <changeSet author="Maxim Galitskiy" id="createForeignKeyAlbumsArtists">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="albums" foreignKeyName="fk_albums_artists_id"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseColumnNames="artist_id" baseTableName="albums"
+                                 constraintName="fk_albums_artists_id" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="artists"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,42 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- Создание unique ключа users.login -->
+    <changeSet author="Maxim Galitskiy" id="createUniqueConstraintUsersLogin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <indexExists tableName="users" indexName="users_login_key"/>
+            </not>
+        </preConditions>
+        <addUniqueConstraint columnNames="login" constraintName="users_login_key" tableName="users"/>
+    </changeSet>
+
+    <!-- Создание foreign ключа users -> roles -->
+    <changeSet author="Maxim Galitskiy" id="createForeignKeyUsersRoles">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="users" foreignKeyName="fk_users_roles_id"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="users" constraintName="fk_users_roles_id"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="role_id" referencedTableName="roles"/>
+    </changeSet>
+
+    <!-- Создание foreign ключа users -> login -->
+    <changeSet author="Maxim Galitskiy" id="createForeignKeyUsersStatuses">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="users" foreignKeyName="fk_users_statuses_id"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseColumnNames="status_id" baseTableName="users" constraintName="fk_users_statuses_id"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="statuses"/>
+    </changeSet>
+
+
+</databaseChangeLog>

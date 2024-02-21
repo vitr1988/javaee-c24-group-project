@@ -1,0 +1,31 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet author="Dmitry Kripan" id="AddAlbumsData">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0"><![CDATA[
+                SELECT COUNT(*)
+                FROM albums
+                ]]>
+            </sqlCheck>
+            <sqlCheck expectedResult="1"><![CDATA[
+                SELECT COUNT(*)
+                FROM artists
+                WHERE name = 'Queen'
+                ]]>
+            </sqlCheck>
+        </preConditions>
+
+        <insert tableName="albums">
+            <!-- Id is auto incremented -->
+            <column name="title" value="A Night at the Opera"/>
+            <column name="release" value="1975.11.21"/>
+            <column name="artist_id" valueComputed="(select id from artists where name = 'Queen')"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -2,7 +2,6 @@ package by.teachmeskills.musicservice.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,17 +12,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "artists")
-public class Artist {
+@Table(name = "roles")
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "role_id", nullable = false)
     private Long id;
 
     @Size(max = 255)
@@ -31,12 +29,7 @@ public class Artist {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "updated_at", nullable = false)
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "artist")
-    private List<Album> albums;
+    @OneToMany(mappedBy = "role")
+    private List<User> users;
 
 }

@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AlbumServiceImpl implements AlbumService {
 
@@ -21,28 +21,31 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public List<AlbumDto> getAllAlbums() {
-        return albumRepository.findAll().stream().map(albumMapper::toDTO).toList();
+        return albumRepository.findAll().stream().map(albumMapper::toDto).toList();
     }
 
     @Override
     public AlbumDto getAlbumById(Long id) {
-        return albumMapper.toDTO(albumRepository.findById(id).orElseThrow(() -> new NotFoundException("Album with id {} not found.", id)));
+        return albumMapper.toDto(albumRepository.findById(id).orElseThrow(() -> new NotFoundException("Album with id {} not found.", id)));
     }
 
+    @Transactional
     @Override
     public AlbumDto save(AlbumDto albumDto) {
-        return albumMapper.toDTO(albumRepository.save(albumMapper.toModel(albumDto)));
+        return albumMapper.toDto(albumRepository.save(albumMapper.toEntity(albumDto)));
     }
 
+    @Transactional
     @Override
     public AlbumDto update(AlbumDto albumDto, Long id) {
-        albumRepository.findById(id).ifPresent(a -> {
-            albumMapper.updateAlbumFromDto(albumDto, a);
-            albumRepository.save(a);
+        albumRepository.findById(id).ifPresent(albumEntity -> {
+            albumMapper.partialUpdate(albumDto, albumEntity);
+            albumRepository.save(albumMapper.toEntity(albumDto));
         });
         return getAlbumById(id);
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
         albumRepository.deleteById(id);

@@ -1,0 +1,108 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet author="Dmitry Kripan" id="AddGenresTracksData-1">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="1"><![CDATA[
+                SELECT COUNT(*)
+                FROM tracks
+                where tracks.title = 'Bohemian Rhapsody'
+                ]]>
+            </sqlCheck>
+            <sqlCheck expectedResult="1"><![CDATA[
+                SELECT COUNT(*)
+                FROM genres
+                WHERE genres.name = 'Progressive rock'
+                ]]>
+            </sqlCheck>
+            <sqlCheck expectedResult="0"><![CDATA[
+                SELECT COUNT(*)
+                FROM genres_tracks
+                         INNER JOIN genres
+                                    ON genres_tracks.genre_id = genres.id
+                         INNER JOIN tracks
+                                    ON genres_tracks.track_id = tracks.id
+                WHERE genres.name = 'Progressive rock'
+                  AND tracks.title = 'Bohemian Rhapsody'
+                ]]>
+            </sqlCheck>
+        </preConditions>
+
+        <insert tableName="genres_tracks">
+            <column name="genre_id" valueComputed="(SELECT id FROM genres WHERE name = 'Progressive rock')"/>
+            <column name="track_id" valueComputed="(SELECT id FROM tracks WHERE title = 'Bohemian Rhapsody')"/>
+        </insert>
+    </changeSet>
+
+
+    <changeSet author="Dmitry Kripan" id="AddGenresTracksData-2">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="1"><![CDATA[
+                SELECT COUNT(*)
+                FROM tracks
+                where tracks.title = 'Bohemian Rhapsody'
+                ]]>
+            </sqlCheck>
+            <sqlCheck expectedResult="1"><![CDATA[
+                SELECT COUNT(*)
+                FROM genres
+                WHERE genres.name = 'Progressive pop'
+                ]]>
+            </sqlCheck>
+            <sqlCheck expectedResult="0"><![CDATA[
+                SELECT COUNT(*)
+                FROM genres_tracks
+                         INNER JOIN genres
+                                    ON genres_tracks.genre_id = genres.id
+                         INNER JOIN tracks
+                                    ON genres_tracks.track_id = tracks.id
+                WHERE genres.name = 'Progressive pop'
+                  AND tracks.title = 'Bohemian Rhapsody'
+                ]]>
+            </sqlCheck>
+        </preConditions>
+
+        <insert tableName="genres_tracks">
+            <column name="genre_id" valueComputed="(SELECT id FROM genres WHERE name = 'Progressive pop')"/>
+            <column name="track_id" valueComputed="(SELECT id FROM tracks WHERE title = 'Bohemian Rhapsody')"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Dmitry Kripan" id="AddGenresTracksData-3">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="1"><![CDATA[
+                SELECT COUNT(*)
+                FROM tracks
+                where tracks.title = 'Bohemian Rhapsody'
+                ]]>
+            </sqlCheck>
+            <sqlCheck expectedResult="1"><![CDATA[
+                SELECT COUNT(*)
+                FROM genres
+                WHERE genres.name = 'Hard rock'
+                ]]>
+            </sqlCheck>
+            <sqlCheck expectedResult="0"><![CDATA[
+                SELECT COUNT(*)
+                FROM genres_tracks
+                         INNER JOIN genres
+                                    ON genres_tracks.genre_id = genres.id
+                         INNER JOIN tracks
+                                    ON genres_tracks.track_id = tracks.id
+                WHERE genres.name = 'Hard rock'
+                  AND tracks.title = 'Bohemian Rhapsody'
+                ]]>
+            </sqlCheck>
+        </preConditions>
+
+        <insert tableName="genres_tracks">
+            <column name="genre_id" valueComputed="(SELECT id FROM genres WHERE name = 'Hard rock')"/>
+            <column name="track_id" valueComputed="(SELECT id FROM tracks WHERE title = 'Bohemian Rhapsody')"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
