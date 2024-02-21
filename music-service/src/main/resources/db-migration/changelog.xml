@@ -21,5 +21,7 @@
     <include file="test-fill-queries/artists-data.xml" relativeToChangelogFile="true"/>
     <include file="test-fill-queries/albums-data.xml" relativeToChangelogFile="true"/>
     <include file="test-fill-queries/tracks-data.xml" relativeToChangelogFile="true"/>
+    <include file="test-fill-queries/genres-data.xml" relativeToChangelogFile="true"/>
+    <include file="test-fill-queries/genres-tracks-data.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

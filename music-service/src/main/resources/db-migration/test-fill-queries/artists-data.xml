@@ -5,11 +5,11 @@
    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
 
-    <changeSet author="Dmitry Kripan" id="Create-artists">
+    <changeSet author="Dmitry Kripan" id="AddArtistsData">
         <preConditions onFail="MARK_RAN">
             <sqlCheck expectedResult="0"><![CDATA[
-                select count(*)
-                from artists
+                SELECT COUNT(*)
+                FROM artists
                 ]]>
                 </sqlCheck>
         </preConditions>

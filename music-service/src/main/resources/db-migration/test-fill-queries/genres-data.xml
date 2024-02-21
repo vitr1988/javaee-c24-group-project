@@ -1,0 +1,53 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet author="Maxim Galitskiy" id="AddGenresData-1">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0"><![CDATA[
+                SELECT COUNT(*)
+                FROM genres
+                WHERE genres.name = 'Progressive rock'
+                ]]>
+                </sqlCheck>
+        </preConditions>
+
+        <insert tableName="genres">
+            <column name="name" value="Progressive rock"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Maxim Galitskiy" id="AddGenresData-2">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0"><![CDATA[
+                SELECT COUNT(*)
+                FROM genres
+                WHERE genres.name = 'Hard rock'
+                ]]>
+                </sqlCheck>
+        </preConditions>
+
+        <insert tableName="genres">
+            <column name="name" value="Hard rock"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Maxim Galitskiy" id="AddGenresData-3">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0"><![CDATA[
+                SELECT COUNT(*)
+                FROM genres
+                WHERE genres.name = 'Progressive pop'
+                ]]>
+                </sqlCheck>
+        </preConditions>
+
+        <insert tableName="genres">
+            <column name="name" value="Progressive pop"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

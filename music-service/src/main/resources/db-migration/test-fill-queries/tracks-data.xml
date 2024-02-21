@@ -5,23 +5,23 @@
    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
 
-    <changeSet author="Dmitry Kripan" id="Create-tracks">
+    <changeSet author="Dmitry Kripan" id="AddTracksData">
         <preConditions onFail="MARK_RAN">
             <sqlCheck expectedResult="0"><![CDATA[
-                select count(*)
-                from tracks
+                SELECT COUNT(*)
+                FROM tracks
                 ]]>
             </sqlCheck>
             <sqlCheck expectedResult="1"><![CDATA[
-                select count(*)
-                from artists
-                where name = 'Queen'
+                SELECT COUNT(*)
+                FROM artists
+                WHERE name = 'Queen'
                 ]]>
             </sqlCheck>
             <sqlCheck expectedResult="1"><![CDATA[
-                select count(*)
-                from albums
-                where title = 'A Night at the Opera'
+                SELECT COUNT(*)
+                FROM albums
+                WHERE title = 'A Night at the Opera'
                 ]]>
             </sqlCheck>
         </preConditions>
@@ -31,7 +31,8 @@
             <column name="title" value="Bohemian Rhapsody"/>
             <column name="track_length" value="00:05:55"/>
             <column name="track_birthday" value="1975-10-31"/>
-            <column name="text" value="Is this the real life? Is this just fantasy? Caught in a landslide, no escape from reality"/>
+            <column name="text"
+                    value="Is this the real life? Is this just fantasy? Caught in a landslide, no escape from reality"/>
             <column name="album_id" valueComputed="(select id from albums where title = 'A Night at the Opera')"/>
         </insert>
     </changeSet>
