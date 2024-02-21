@@ -25,6 +25,7 @@
         <mapstruct.defaultcomponentmodel.value>spring</mapstruct.defaultcomponentmodel.value>
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
         <nimbus-jose-jwt.version>9.37.3</nimbus-jose-jwt.version>
+        <hypersistence-utils.version>3.7.3</hypersistence-utils.version>
     </properties>
 
     <dependencies>
@@ -44,7 +45,11 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.hypersistence</groupId>
+            <artifactId>hypersistence-utils-hibernate-55</artifactId>
+            <version>${hypersistence-utils.version}</version>
         </dependency>
 
 
@@ -117,6 +122,9 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
+
     </dependencies>
 
     <build>
