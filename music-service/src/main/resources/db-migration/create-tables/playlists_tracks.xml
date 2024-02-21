@@ -1,0 +1,50 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- Создание таблицы playlists_tracks -->
+    <changeSet author="Maxim Galitskiy" id="createTablePlaylistsTracks">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="playlists_tracks"/>
+            </not>
+        </preConditions>
+        <createTable tableName="playlists_tracks">
+            <column name="playlist_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="playlists_tracks_pkey"/>
+            </column>
+            <column name="track_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="playlists_tracks_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Создание foreign ключа playlists_tracks -> playlists -->
+    <changeSet author="Maxim Galitskiy" id="createForeignKeyGenresTracksGenres">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="playlists_tracks" foreignKeyName="fk_playlists_tracks_playlists_id"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseColumnNames="playlist_id" baseTableName="playlists_tracks"
+                                 constraintName="fk_playlists_tracks_playlists_id" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="playlists"/>
+    </changeSet>
+
+    <!-- Создание foreign ключа playlists_tracks -> tracks -->
+    <changeSet author="Maxim Galitskiy" id="createForeignKeyGenresTracksTracks">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="playlists_tracks" foreignKeyName="fk_playlists_tracks_tracks_id"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseColumnNames="track_id" baseTableName="playlists_tracks"
+                                 constraintName="fk_playlists_tracks_tracks_id" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="tracks"/>
+    </changeSet>
+
+</databaseChangeLog>
