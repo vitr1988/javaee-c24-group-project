@@ -4,8 +4,22 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <include file="init/artists.xml" relativeToChangelogFile="true"/>
-    <include file="init/albums.xml" relativeToChangelogFile="true"/>
-    <include file="init/tracks.xml" relativeToChangelogFile="true"/>
+    <!-- Создание таблиц -->
+    <include file="create-tables/albums.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/artists.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/genres.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/genres_tracks.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/playlists.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/playlists_tracks.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/roles.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/statuses.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/track_file.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/tracks.xml" relativeToChangelogFile="true"/>
+    <include file="create-tables/users.xml" relativeToChangelogFile="true"/>
+
+    <!-- Тестовое наполнение таблиц -->
+    <include file="test-fill-queries/artists-data.xml" relativeToChangelogFile="true"/>
+    <include file="test-fill-queries/albums-data.xml" relativeToChangelogFile="true"/>
+    <include file="test-fill-queries/tracks-data.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
