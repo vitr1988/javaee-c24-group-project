@@ -1,9 +1,7 @@
 package by.teachmeskills.musicservice.entity;
 
-import io.hypersistence.utils.hibernate.type.interval.PostgreSQLIntervalType;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,22 +10,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "tracks")
-@TypeDef(typeClass = PostgreSQLIntervalType.class, defaultForType = Duration.class)
-public class Track {
+@Table(name = "playlists")
+public class Playlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -38,34 +34,23 @@ public class Track {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @Column(name = "description")
+    private String description;
+
     @NotNull
-    @Column(name = "track_length", nullable = false)
-    private Duration trackLength;
-
-    @Column(name = "track_birthday")
-    private LocalDateTime trackBirthday;
-
-    @Column(name = "text")
-    private String text;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "album_id")
-    private Album album;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @NotNull
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column(name = "downloads")
-    private Long downloads;
-
-    @ManyToMany(mappedBy = "tracks")
-    private List<Genre> genres;
-
-    @ManyToMany(mappedBy = "tracks")
-    private List<Playlist> playlists;
-
-    @OneToMany(mappedBy = "track")
-    private List<TrackFile> trackFiles;
+    @ManyToMany
+    @JoinTable(
+            name = "playlists_tracks",
+            joinColumns = @JoinColumn(name = "playlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "track_id"))
+    private List<Track> tracks;
 
 }

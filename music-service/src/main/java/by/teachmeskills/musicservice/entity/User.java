@@ -21,8 +21,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "albums")
-public class Album {
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -30,22 +30,34 @@ public class Album {
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "title", nullable = false)
-    private String title;
+    @Column(name = "fullname", nullable = false)
+    private String fullname;
 
-    @Column(name = "album_release")
-    private LocalDateTime albumRelease;
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "login", nullable = false)
+    private String login;
+
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "password", nullable = false)
+    private String password;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "artist_id", nullable = false)
-    private Artist artist;
+    @JoinColumn(name = "status_id", nullable = false)
+    private Status status;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
     @NotNull
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "album")
-    private List<Track> tracks;
+    @OneToMany(mappedBy = "user")
+    private List<Playlist> playlists;
 
 }
