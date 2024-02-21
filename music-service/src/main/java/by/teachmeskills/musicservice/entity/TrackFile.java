@@ -2,6 +2,7 @@ package by.teachmeskills.musicservice.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,20 +29,21 @@ public class TrackFile {
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "file_name", nullable = false)
-    private String fileName;
+    @Column(name = "uploaded_name", nullable = false)
+    private String uploadedName;
 
     @NotNull
-    @Column(name = "file_size", nullable = false)
-    private Long fileSize;
+    @Column(name = "size", nullable = false)
+    private Long size;
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "file_key", nullable = false)
-    private String fileKey;
+    @Column(name = "store_name", nullable = false)
+    private String storeName;
 
     @NotNull
     @Column(name = "updated_at", nullable = false)
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     @NotNull

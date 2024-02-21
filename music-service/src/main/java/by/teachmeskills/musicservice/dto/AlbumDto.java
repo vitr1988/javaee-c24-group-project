@@ -20,13 +20,11 @@ public class AlbumDto {
     @Size(min = 1, max = 255)
     @NotEmpty
     @NotBlank
-
     String title;
 
-    LocalDateTime albumRelease;
+    LocalDateTime release;
 
     @NotNull
-
     ArtistDto artist;
 
     List<TrackDto> tracks;

@@ -18,7 +18,4 @@ public class ArtistDto {
     @NotNull
     @Size(max = 255)
     String name;
-
-    @JsonIgnore
-    private List<Album> albums;
 }

@@ -25,16 +25,13 @@ public class TrackDto {
     String title;
 
     @NotNull
-    Duration trackLength;
+    Duration length;
 
     @NotNull
-    LocalDateTime trackBirthday;
+    LocalDateTime release;
 
     @Size(max = 5000)
     String text;
-
-    @JsonIgnore
-    AlbumDto album;
 
     Long downloads;
 

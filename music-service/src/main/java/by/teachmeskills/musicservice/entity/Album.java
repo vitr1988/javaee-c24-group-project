@@ -2,6 +2,7 @@ package by.teachmeskills.musicservice.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,8 +34,8 @@ public class Album {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "album_release")
-    private LocalDateTime albumRelease;
+    @Column(name = "release")
+    private LocalDateTime release;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -43,6 +44,7 @@ public class Album {
 
     @NotNull
     @Column(name = "updated_at", nullable = false)
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "album")

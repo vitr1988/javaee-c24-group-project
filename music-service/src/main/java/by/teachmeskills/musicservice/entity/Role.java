@@ -26,8 +26,8 @@ public class Role {
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "role_name", nullable = false)
-    private String roleName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @OneToMany(mappedBy = "role")
     private List<User> users;

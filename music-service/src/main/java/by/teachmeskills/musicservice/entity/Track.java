@@ -4,6 +4,7 @@ import io.hypersistence.utils.hibernate.type.interval.PostgreSQLIntervalType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,11 +40,11 @@ public class Track {
     private String title;
 
     @NotNull
-    @Column(name = "track_length", nullable = false)
-    private Duration trackLength;
+    @Column(name = "length", nullable = false)
+    private Duration length;
 
-    @Column(name = "track_birthday")
-    private LocalDateTime trackBirthday;
+    @Column(name = "release")
+    private LocalDateTime release;
 
     @Column(name = "text")
     private String text;
@@ -54,6 +55,7 @@ public class Track {
 
     @NotNull
     @Column(name = "updated_at", nullable = false)
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     @Column(name = "downloads")

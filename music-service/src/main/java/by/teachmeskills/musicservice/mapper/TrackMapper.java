@@ -12,7 +12,7 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface TrackMapper {
     Track toEntity(TrackDto trackDto);
-    @Mapping(target = "album", ignore = true)
+
     TrackDto toDto(Track track);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
