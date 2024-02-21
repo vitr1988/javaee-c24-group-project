@@ -1,6 +1,5 @@
 package by.teachmeskills.musicservice.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
