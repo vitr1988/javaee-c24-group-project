@@ -15,7 +15,7 @@
             <column autoIncrement="true" name="role_id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="roles_pkey"/>
             </column>
-            <column name="role_name" type="VARCHAR(255)">
+            <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
         </createTable>

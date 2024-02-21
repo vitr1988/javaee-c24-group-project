@@ -17,7 +17,7 @@
             <column name="title" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="album_release" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="release" type="TIMESTAMP WITHOUT TIME ZONE"/>
             <column name="artist_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>

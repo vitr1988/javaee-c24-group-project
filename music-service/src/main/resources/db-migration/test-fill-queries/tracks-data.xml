@@ -29,8 +29,8 @@
         <insert tableName="tracks">
             <!-- Id is auto incremented -->
             <column name="title" value="Bohemian Rhapsody"/>
-            <column name="track_length" value="00:05:55"/>
-            <column name="track_birthday" value="1975-10-31"/>
+            <column name="length" value="00:05:55"/>
+            <column name="release" value="1975-10-31"/>
             <column name="text"
                     value="Is this the real life? Is this just fantasy? Caught in a landslide, no escape from reality"/>
             <column name="album_id" valueComputed="(select id from albums where title = 'A Night at the Opera')"/>

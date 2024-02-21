@@ -17,10 +17,10 @@
             <column name="title" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="track_length" type="INTERVAL(49, 6)(49, 6)">
+            <column name="length" type="INTERVAL">
                 <constraints nullable="false"/>
             </column>
-            <column name="track_birthday" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="release" type="TIMESTAMP WITHOUT TIME ZONE"/>
             <column name="text" type="TEXT"/>
             <column name="album_id" type="BIGINT"/>
             <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
