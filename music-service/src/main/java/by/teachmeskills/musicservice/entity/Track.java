@@ -53,7 +53,6 @@ public class Track {
     @JoinColumn(name = "album_id")
     private Album album;
 
-    @NotNull
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
