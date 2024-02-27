@@ -18,7 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -51,6 +52,6 @@ public class Playlist {
             name = "playlists_tracks",
             joinColumns = @JoinColumn(name = "playlist_id"),
             inverseJoinColumns = @JoinColumn(name = "track_id"))
-    private List<Track> tracks;
+    private Set<Track> tracks = new HashSet<>();
 
 }
