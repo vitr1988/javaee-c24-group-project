@@ -1,0 +1,21 @@
+.track-buttons-container {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.track-container:hover .track-buttons-container {
+
+    opacity: 1;
+    visibility: visible;
+}
+
+.track-container:hover .track-additional-info {
+    filter: blur(3px);
+    -webkit-filter: blur(5px);
+}
+
+.modal {
+    backdrop-filter: blur(3px) !important;
+    -webkit-backdrop-filter: blur(3px) !important;
+}

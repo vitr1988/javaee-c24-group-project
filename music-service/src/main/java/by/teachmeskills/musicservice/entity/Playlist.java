@@ -18,7 +18,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -43,7 +44,6 @@ public class Playlist {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @NotNull
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
@@ -53,6 +53,6 @@ public class Playlist {
             name = "playlists_tracks",
             joinColumns = @JoinColumn(name = "playlist_id"),
             inverseJoinColumns = @JoinColumn(name = "track_id"))
-    private List<Track> tracks;
+    private Set<Track> tracks = new HashSet<>();
 
 }

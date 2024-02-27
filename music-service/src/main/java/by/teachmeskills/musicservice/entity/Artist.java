@@ -2,6 +2,7 @@ package by.teachmeskills.musicservice.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
@@ -20,6 +21,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "artists")
+@ToString
 public class Artist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,12 +33,12 @@ public class Artist {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "artist")
+    @ToString.Exclude
     private List<Album> albums;
 
 }

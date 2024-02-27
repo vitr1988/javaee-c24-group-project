@@ -1,5 +1,8 @@
 package by.teachmeskills.musicservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -7,14 +10,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @Accessors(chain = true)
 public class TrackDto {
-
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     Long id;
 
     @NotNull
@@ -24,15 +26,20 @@ public class TrackDto {
     String title;
 
     @NotNull
-    Duration length;
+    Long length;
 
     @NotNull
-    LocalDateTime release;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    LocalDate release;
+
+    @JsonIgnoreProperties({"tracks"})
+    @NotNull
+    AlbumDto album;
 
     @Size(max = 5000)
     String text;
 
     Long downloads;
 
-    List<GenreDto> genres;
+    Set<GenreDto> genres;
 }

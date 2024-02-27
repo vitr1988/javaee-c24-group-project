@@ -29,14 +29,14 @@ public class GenreServiceImpl implements GenreService {
         return genreMapper.toDto(genreRepository.findById(id).orElseThrow(() -> new NotFoundException("Genre with id {} not found.", id)));
     }
 
-    @Transactional
     @Override
+    @Transactional
     public GenreDto save(GenreDto genreDto) {
-        return genreMapper.toDto(genreRepository.save(genreMapper.toEntity(genreDto)));
+        return genreMapper.toDto(genreRepository.save(genreMapper.toEntity(genreDto.setId(0L))));
     }
 
-    @Transactional
     @Override
+    @Transactional
     public GenreDto update(GenreDto genreDto, Long id) {
         genreRepository.findById(id).ifPresent(genreEntity -> {
             genreMapper.partialUpdate(genreDto, genreEntity);
@@ -45,8 +45,8 @@ public class GenreServiceImpl implements GenreService {
         return getGenreById(id);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public void delete(Long id) {
         genreRepository.deleteById(id);
     }
