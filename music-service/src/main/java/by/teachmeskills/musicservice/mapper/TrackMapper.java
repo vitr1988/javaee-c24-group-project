@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, imports = {Duration.class})
 public interface TrackMapper {
+
     @Mappings({
             @Mapping(target = "length", expression = "java(Duration.ofSeconds(trackDto.getLength()))"),
             @Mapping(target = "release", expression = "java(trackDto.getRelease().atStartOfDay())"),
@@ -30,6 +31,7 @@ public interface TrackMapper {
             @Mapping(target = "release", expression = "java(track.getRelease().toLocalDate())"),
             @Mapping(target = "album", ignore = true)
     })
+
     TrackDto toDto(Track track);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
