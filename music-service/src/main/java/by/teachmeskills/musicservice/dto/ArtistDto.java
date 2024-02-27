@@ -13,6 +13,6 @@ public class ArtistDto {
     Long id;
 
     @NotNull
-    @Size(max = 255)
+    @Size(min = 2, max = 255)
     String name;
 }

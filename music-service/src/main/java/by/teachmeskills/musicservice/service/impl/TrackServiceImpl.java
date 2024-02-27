@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class TrackServiceImpl implements TrackService {
 
@@ -30,11 +30,13 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
+    @Transactional
     public TrackDto save(TrackDto trackDto) {
-        return trackMapper.toDto(tracksRepository.save(trackMapper.toEntity(trackDto)));
+        return trackMapper.toDto(tracksRepository.save(trackMapper.toEntity(trackDto.setId(0L))));
     }
 
     @Override
+    @Transactional
     public TrackDto update(TrackDto trackDto, Long id) {
         tracksRepository.findById(id).ifPresent(trackEntity -> {
             trackMapper.partialUpdate(trackDto, trackEntity);
@@ -44,6 +46,7 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         tracksRepository.deleteById(id);
     }

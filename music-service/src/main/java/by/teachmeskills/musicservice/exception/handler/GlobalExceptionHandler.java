@@ -24,6 +24,7 @@ public class GlobalExceptionHandler {
         return errorResponse;
     }
 
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
     public ErrorResponse handleConstraintViolationException(ConstraintViolationException e) {
@@ -43,3 +44,4 @@ public class GlobalExceptionHandler {
         return new ErrorResponse("RESOURCE_NOT_FOUND", message);
     }
 }
+

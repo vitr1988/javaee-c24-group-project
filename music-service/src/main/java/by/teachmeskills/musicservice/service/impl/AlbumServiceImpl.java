@@ -29,14 +29,16 @@ public class AlbumServiceImpl implements AlbumService {
         return albumMapper.toDto(albumRepository.findById(id).orElseThrow(() -> new NotFoundException("Album with id {} not found.", id)));
     }
 
-    @Transactional
+
     @Override
+    @Transactional
     public AlbumDto save(AlbumDto albumDto) {
-        return albumMapper.toDto(albumRepository.save(albumMapper.toEntity(albumDto)));
+        return albumMapper.toDto(albumRepository.save(albumMapper.toEntity(albumDto.setId(0L))));
     }
 
-    @Transactional
+
     @Override
+    @Transactional
     public AlbumDto update(AlbumDto albumDto, Long id) {
         albumRepository.findById(id).ifPresent(albumEntity -> {
             albumMapper.partialUpdate(albumDto, albumEntity);
@@ -45,8 +47,9 @@ public class AlbumServiceImpl implements AlbumService {
         return getAlbumById(id);
     }
 
-    @Transactional
+
     @Override
+    @Transactional
     public void delete(Long id) {
         albumRepository.deleteById(id);
     }

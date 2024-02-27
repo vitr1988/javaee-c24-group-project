@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -37,13 +38,14 @@ public class ArtistController {
     }
 
     @PostMapping
-    public ResponseEntity<ArtistDto> create(@RequestBody ArtistDto artistDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<ArtistDto> create(@RequestBody @Valid ArtistDto artistDto) {
         ArtistDto result = artistService.save(artistDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ArtistDto> update(@RequestBody ArtistDto artistDto, @PathVariable("id") Long id) {
+    public ResponseEntity<ArtistDto> update(@RequestBody @Valid ArtistDto artistDto, @PathVariable("id") Long id) {
         ArtistDto updatedArtist = artistService.update(artistDto, id);
         if (updatedArtist == null) {
             return ResponseEntity.notFound().build();
