@@ -41,4 +41,5 @@ public class ErrorResponse {
         }
         fields.add(new Field(name, message));
     }
+
 }
