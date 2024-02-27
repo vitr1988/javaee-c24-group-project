@@ -41,7 +41,6 @@ public class TrackFile {
     @Column(name = "store_name", nullable = false)
     private String storeName;
 
-    @NotNull
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;

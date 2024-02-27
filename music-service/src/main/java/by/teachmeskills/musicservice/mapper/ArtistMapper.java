@@ -15,7 +15,9 @@ public interface ArtistMapper {
 
     @AfterMapping
     default void linkAlbums(@MappingTarget Artist artist) {
-        artist.getAlbums().forEach(album -> album.setArtist(artist));
+        if (artist.getAlbums() != null) {
+            artist.getAlbums().forEach(album -> album.setArtist(artist));
+        }
     }
 
     ArtistDto toDto(Artist artist);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,12 +37,12 @@ public class AlbumController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AlbumDto create(@RequestBody AlbumDto albumDto) {
+    public AlbumDto create(@RequestBody @Valid AlbumDto albumDto) {
         return albumService.save(albumDto);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<AlbumDto> update(@RequestBody AlbumDto albumDto, @PathVariable("id") Long id) {
+    public ResponseEntity<AlbumDto> update(@RequestBody @Valid AlbumDto albumDto, @PathVariable("id") Long id) {
         AlbumDto updatedAlbum = albumService.update(albumDto, id);
         if (updatedAlbum == null) {
             return ResponseEntity.notFound().build();

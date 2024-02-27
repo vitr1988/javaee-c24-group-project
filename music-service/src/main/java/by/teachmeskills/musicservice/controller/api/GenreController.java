@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -37,13 +38,14 @@ public class GenreController {
     }
 
     @PostMapping
-    public ResponseEntity<GenreDto> create(@RequestBody GenreDto genreDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<GenreDto> create(@RequestBody @Valid GenreDto genreDto) {
         GenreDto result = genreService.save(genreDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<GenreDto> update(@RequestBody GenreDto genreDto, @PathVariable("id") Long id) {
+    public ResponseEntity<GenreDto> update(@RequestBody @Valid GenreDto genreDto, @PathVariable("id") Long id) {
         GenreDto updatedGenre = genreService.update(genreDto, id);
         if (updatedGenre == null) {
             return ResponseEntity.notFound().build();
