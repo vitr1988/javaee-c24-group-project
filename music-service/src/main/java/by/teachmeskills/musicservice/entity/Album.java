@@ -35,6 +35,7 @@ public class Album {
     private String title;
 
     @Column(name = "release")
+    @NotNull
     private LocalDateTime release;
 
     @NotNull
@@ -42,7 +43,6 @@ public class Album {
     @JoinColumn(name = "artist_id", nullable = false)
     private Artist artist;
 
-    @NotNull
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;

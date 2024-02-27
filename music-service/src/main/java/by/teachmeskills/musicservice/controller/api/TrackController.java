@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
 
 import java.nio.charset.StandardCharsets;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -61,6 +62,7 @@ public class TrackController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+
     public TrackDto create(@RequestPart(name = "data") TrackDto trackDto, @RequestPart(name = "file", required = false) MultipartFile file) {
         TrackDto result = trackService.save(trackDto);
         if (file != null) {
@@ -70,7 +72,7 @@ public class TrackController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<TrackDto> update(@RequestBody TrackDto trackDto, @PathVariable("id") Long id) {
+    public ResponseEntity<TrackDto> update(@RequestBody @Valid TrackDto trackDto, @PathVariable("id") Long id) {
         TrackDto updatedTrack = trackService.update(trackDto, id);
         if (updatedTrack == null) {
             return ResponseEntity.notFound().build();
