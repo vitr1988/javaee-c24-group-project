@@ -5,6 +5,7 @@ import by.teachmeskills.musicservice.entity.TrackFile;
 import by.teachmeskills.musicservice.mapper.TrackMapper;
 import by.teachmeskills.musicservice.repository.TrackFileRepository;
 import by.teachmeskills.musicservice.service.FileService;
+import by.teachmeskills.musicservice.service.TrackService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +23,7 @@ import java.nio.file.Paths;
 
 @Slf4j
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
 
@@ -31,7 +32,9 @@ public class FileServiceImpl implements FileService {
 
     private final TrackMapper trackMapper;
     private final TrackFileRepository trackFileRepository;
+    private final TrackService trackService;
 
+    @Transactional
     @Override
     public Boolean uploadFile(MultipartFile file, TrackDto trackDto) {
         try {
@@ -55,9 +58,11 @@ public class FileServiceImpl implements FileService {
         }
     }
 
+    @Transactional
     @Override
     public Resource downloadFile(Long id) {
         String filePath = path + trackFileRepository.findTrackFileByTrackId(id).getStoreName();
+        trackService.incrementDownloads(id);
         try {
             return new UrlResource(Paths.get(filePath).toUri());
         } catch (MalformedURLException e) {
@@ -65,6 +70,7 @@ public class FileServiceImpl implements FileService {
         }
     }
 
+    @Transactional
     @Override
     public Boolean removeFile(Long id) {
         TrackFile trackFile = trackFileRepository.findTrackFileByTrackId(id);

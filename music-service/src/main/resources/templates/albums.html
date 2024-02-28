@@ -9,7 +9,7 @@
     <link th:href="@{/css/global/bootstrap-icons.min.css}" rel="stylesheet">
     <link th:href="@{/css/tracks.css}" rel="stylesheet">
 
-    <title>Tracks</title>
+    <title>Albums</title>
 </head>
 <body>
 
@@ -18,38 +18,33 @@
 <div th:include="navbar"></div>
 
 <div class="container mt-2 position-relative">
+<!--
 
     <button class="btn btn-outline-secondary p-1 position-absolute"
             style="height: 50px; width: 50px; left: -50px; top: 10px; font-size: x-large;"
             data-bs-toggle="modal"
             data-bs-target="#editTrackModal"><img class="img-fluid"/><i class="bi-plus-circle"></i></button>
+-->
 
     <div class="row">
 
-        <div class="col-md-4 p-1 track-container" th:each="track : ${tracks}">
-            <div class="card d-flex align-items-center justify-content-between position-relative" style="height: 75px">
+        <div class="col-md-4 p-1 album-container" th:each="album : ${albums}">
+            <div class="card d-flex align-items-center justify-content-between position-relative" style="height: 100px">
                 <div class="card-body p-2 align-self-start">
-                    <h5 class="card-title overflow-hidden" th:text="${track.getTitle()}"></h5>
-                    <h6 class="card-title overflow-hidden" th:text="${track.getAlbum().getArtist().getName()}"></h6>
-                </div>
-                <div class="position-absolute bottom-0 m-1 end-0 track-additional-info">
-                    <p class="m-0 fw-light fst-italic" th:text="${'Downloads: ' + (track.getDownloads() != null ? track.getDownloads() : '0')}"></p>
+                    <h5 class="card-title overflow-hidden" th:text="${album.getTitle()}"></h5>
+                    <h6 class="card-title overflow-hidden" th:text="${album.getArtist().getName()}"></h6>
+                    <h6 class="card-title overflow-hidden" th:text="'Tracks: ' + ${#lists.size(album.getTracks())}"></h6>
                 </div>
 
-                <div class="position-absolute top-50 translate-middle-y end-0 me-2 track-buttons-container">
-
-                    <a th:if="${track.getDownloads() != null}"  class="btn btn-outline-secondary p-1" style="height: 50px; width: 50px; font-size: x-large;"
-                       th:href="@{/api/tracks/{id}/download(id=${track.id})}" download>
-                        <i class="bi-download"></i>
-                    </a>
+                <div class="position-absolute top-50 translate-middle-y end-0 me-2 album-buttons-container">
                     <button class="btn btn-outline-secondary p-1 " style="height: 50px; width: 50px"
                             data-bs-toggle="modal"
-                            data-bs-target="#editTrackModal" th:data-track-id="${track.id}"><img class="img-fluid"
+                            data-bs-target="#editAlbumModal" th:data-album-id="${album.id}"><img class="img-fluid"
                                                                                                  th:src="@{/img/edit.svg}"/>
                     </button>
                     <button class="btn btn-outline-secondary p-1" style="height: 50px; width: 50px" data-bs-toggle="modal"
-                            data-bs-target="#deleteObjectModal" th:data-url="${'/api/tracks/' + track.id}"
-                            th:data-name="${track.getTitle()}">
+                            data-bs-target="#deleteObjectModal" th:data-url="${'/api/albums/' + album.id}"
+                            th:data-name="${album.getTitle()}">
                         <img class="img-fluid" th:src="@{/img/delete.svg}"/></button>
                 </div>
             </div>
@@ -57,6 +52,58 @@
 
     </div>
 
+</div>
+
+
+<!-- Создание альбома -->
+<div class="modal fade" id="editAlbumModal" tabindex="-1" aria-labelledby="editAlbumLabel" aria-hidden="true"
+     data-bs-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editAlbumModalLabel">Create album</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editAlbumForm">
+                    <input type="hidden" th:name="id" id="edit-album-id">
+                    <div class="mb-3">
+                        <label for="edit-album-title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="edit-album-title" placeholder="Track title"
+                               required>
+                        <div id="titleErrorLabel" class="invalid-feedback"></div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="album-edit-release" class="form-label">Release</label>
+                        <div class="input-group date" data-provide="datepicker" id="album-release-dapapicker">
+                            <input type="text" class="form-control" id="album-edit-release" placeholder="00-00-00"
+                                   required>
+                            <span class="input-group-addon"></span>
+                            <span class="input-group-text"><i class="bi-calendar"></i></span>
+                        </div>
+                        <div id="albumReleaseErrorLabel" class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-album-select" class="form-label">Artist</label>
+                        <select class="form-select" id="edit-artist-select">
+                        </select>
+                        <div id="artistErrorLabel" class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-track-select" class="form-label">Tracks</label>
+                        <select class="form-select" id="edit-track-select" multiple>
+                        </select>
+                        <div id="trackErrorLabel" class="invalid-feedback"></div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="submit" form="editAlbumForm" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -139,49 +186,7 @@
 </div>
 
 
-<!-- Создание альбома -->
-<div class="modal fade" id="editAlbumModal" tabindex="-1" aria-labelledby="editAlbumLabel" aria-hidden="true"
-     data-bs-backdrop="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editAlbumModalLabel">Create album</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editAlbumForm">
-                    <input type="hidden" th:name="id" id="edit-album-id">
-                    <div class="mb-3">
-                        <label for="edit-album-title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="edit-album-title" placeholder="Track title"
-                               required>
-                        <div id="titleErrorLabel" class="invalid-feedback"></div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="album-edit-release" class="form-label">Release</label>
-                        <div class="input-group date" data-provide="datepicker" id="album-release-dapapicker">
-                            <input type="text" class="form-control" id="album-edit-release" placeholder="00-00-00"
-                                   required>
-                            <span class="input-group-addon"></span>
-                            <span class="input-group-text"><i class="bi-calendar"></i></span>
-                        </div>
-                        <div id="albumReleaseErrorLabel" class="invalid-feedback"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-album-select" class="form-label">Artist</label>
-                        <select class="form-select" id="edit-artist-select">
-                        </select>
-                        <div id="artistErrorLabel" class="invalid-feedback"></div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="submit" form="editAlbumForm" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div th:include="alerts"></div>
 
@@ -193,6 +198,6 @@
 <script th:src="@{/js/global/tom-select.complete.min.js}"></script>
 <script th:src="@{/js/global/bootstrap-datepicker.min.js}"></script>
 <script th:src="@{/js/global/popper.min.js}"></script>
-<script th:src="@{/js/tracks.js}"></script>
+<script th:src="@{/js/albums.js}"></script>
 </body>
 </html>

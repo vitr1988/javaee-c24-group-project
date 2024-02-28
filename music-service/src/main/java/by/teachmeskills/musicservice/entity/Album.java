@@ -2,6 +2,8 @@ package by.teachmeskills.musicservice.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
@@ -39,8 +41,9 @@ public class Album {
     private LocalDateTime release;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "artist_id", nullable = false)
+    @Cascade(CascadeType.REFRESH)
     private Artist artist;
 
     @Column(name = "updated_at", nullable = false)
