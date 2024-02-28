@@ -4,6 +4,7 @@ import by.teachmeskills.musicservice.dto.TrackDto;
 import by.teachmeskills.musicservice.service.FileService;
 import by.teachmeskills.musicservice.service.TrackService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tracks")
 @RequiredArgsConstructor
+@Slf4j
 public class TrackController {
 
     private final TrackService trackService;
@@ -60,19 +62,25 @@ public class TrackController {
 
     }
 
+    @PostMapping(path = "/{id}/file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addFile(@PathVariable Long id, @RequestPart(name = "file", required = false) MultipartFile file) {
+        if (file != null) {
+            fileService.uploadFile(file, new TrackDto().setId(id));
+        }
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    public TrackDto create(@RequestBody @Valid TrackDto trackDto) {
+        log.info("TrackDTO!!! {}", trackDto);
 
-    public TrackDto create(@RequestPart(name = "data") TrackDto trackDto, @RequestPart(name = "file", required = false) MultipartFile file) {
-        TrackDto result = trackService.save(trackDto);
-        if (file != null) {
-            fileService.uploadFile(file, result);
-        }
-        return result;
+        return trackService.save(trackDto);
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<TrackDto> update(@RequestBody @Valid TrackDto trackDto, @PathVariable("id") Long id) {
+        log.info("TrackDTO!!! {}", trackDto);
         TrackDto updatedTrack = trackService.update(trackDto, id);
         if (updatedTrack == null) {
             return ResponseEntity.notFound().build();

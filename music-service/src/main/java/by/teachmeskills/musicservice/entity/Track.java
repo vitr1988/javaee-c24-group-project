@@ -57,7 +57,6 @@ public class Track {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "album_id")
     @NotNull
-    @ToString.Exclude
     private Album album;
 
     @Column(name = "updated_at", nullable = false)

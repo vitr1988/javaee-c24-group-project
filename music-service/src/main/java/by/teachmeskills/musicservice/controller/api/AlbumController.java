@@ -3,6 +3,7 @@ package by.teachmeskills.musicservice.controller.api;
 import by.teachmeskills.musicservice.dto.AlbumDto;
 import by.teachmeskills.musicservice.service.AlbumService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/albums")
 @RequiredArgsConstructor
+@Slf4j
 public class AlbumController {
 
     private final AlbumService albumService;
@@ -43,6 +45,7 @@ public class AlbumController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<AlbumDto> update(@RequestBody @Valid AlbumDto albumDto, @PathVariable("id") Long id) {
+        log.info("AlbumDto!!! {}", albumDto);
         AlbumDto updatedAlbum = albumService.update(albumDto, id);
         if (updatedAlbum == null) {
             return ResponseEntity.notFound().build();

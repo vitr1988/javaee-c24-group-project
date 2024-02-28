@@ -29,6 +29,17 @@ public class TrackServiceImpl implements TrackService {
         return trackMapper.toDto(tracksRepository.findById(id).orElseThrow(() -> new NotFoundException("Track with id {} not found.", id)));
     }
 
+
+    @Override
+    @Transactional
+    public void incrementDownloads(Long id){
+        tracksRepository.findById(id).ifPresent(track -> {
+            Long downloads = track.getDownloads();
+            track.setDownloads(downloads == null ? 1L : downloads + 1L);
+            tracksRepository.save(track);
+        });
+    }
+
     @Override
     @Transactional
     public TrackDto save(TrackDto trackDto) {

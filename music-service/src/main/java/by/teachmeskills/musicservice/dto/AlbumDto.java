@@ -1,6 +1,7 @@
 package by.teachmeskills.musicservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -30,5 +31,6 @@ public class AlbumDto {
     @NotNull
     ArtistDto artist;
 
+    @JsonIgnoreProperties({"album"})
     List<TrackDto> tracks;
 }
